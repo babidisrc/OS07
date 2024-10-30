@@ -35,33 +35,35 @@ button {
  
 .window {
     position: absolute !important;
-    z-index: 9;
     text-align: center;
     overflow: auto;
-    
- 
   }
 
-  .title-bar {
+.title-bar {
     cursor: move;
     z-index: 10;
     cursor: var(--babidi-cursor-grab);
-  }
+}
 
 .taskbar {
   display: flex;
   gap: 4px;
-  align-items: center;
   padding: 7px;
-  padding-left: 7px;
-  padding-left: 8px;
+  padding-left: 10px;
 }
 
 footer {
-  position: absolute;
   z-index: 100;
+  position: absolute;
   width: 100%;
   height: 50px;
-  background-color: #fdfdfd;
+  box-sizing: border-box;
+  border-top: 1px solid #666;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.7),
+    transparent 0.5vmax
+  );
+  background-color: #4580c4;
   bottom: 0;
 }
