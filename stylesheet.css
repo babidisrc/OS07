@@ -1,25 +1,67 @@
+:root {
+  --babidi-cursor-normal: url("imgs/windows7_arrow.cur"), auto;
+  --babidi-cursor-click: url("imgs/windows7_link.cur") 7 0, auto;
+  --babidi-cursor-grab: url("imgs/windows7_move.cur") 5 0, auto;
+  --babidi-cursor-text: url("imgs/windows7_select.cur") 7 0, auto;
+}
+
+html {
+  overflow: hidden;
+}
+
+body {
+  background-color: black;
+}
+
+html, body {
+  cursor: var(--babidi-cursor-normal);
+}
+ 
+#OS {
+  position: absolute;
+  width: 70%;
+  height: 95%;
+  left: 0; 
+  right: 0; 
+  margin-inline: auto; 
+  background-image: url("imgs/windows-7-background.jpg");
+  background-position:center;
+  background-color: black;
+}
+
+button {
+  cursor: var(--babidi-cursor-click);
+}
+ 
 .window {
-    position: absolute;
+    position: absolute !important;
     z-index: 9;
-    background-color: #f1f1f1;
-    border: 1px solid #d3d3d3;
     text-align: center;
     overflow: auto;
-
-    min-width: 200px; 
-    min-height: 100px;
+    
+ 
   }
-   
-  .header {
-    padding: 10px;
+
+  .title-bar {
     cursor: move;
     z-index: 10;
-    background-color: #2196F3;
-    color: #fff;
+    cursor: var(--babidi-cursor-grab);
   }
 
-  .closeButton {
-    float: right;
-    background-color: red;
-    color: whitesmoke;
-  }
+.taskbar {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 7px;
+  padding-left: 7px;
+  padding-left: 8px;
+}
+
+footer {
+  position: absolute;
+  z-index: 100;
+  width: 100%;
+  height: 50px;
+  background-color: #fdfdfd;
+  bottom: 0;
+}
