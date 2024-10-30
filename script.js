@@ -8,8 +8,10 @@ windows.forEach((win) => {
     dragElement(win);
  
     const closeButton = win.querySelector('[aria-label="Close"]');
+    const minimizeButton = win.querySelector('[aria-label="Minimize"]');
     closeButton.addEventListener("click", () => hide(win), false);
- 
+    minimizeButton.addEventListener("click", () => hide(win), false);
+
     document.getElementById("showButton").addEventListener("click", () => show(win), false);
  
     win.addEventListener("click", () => bringToFront(win));
@@ -29,13 +31,17 @@ function bringToFront(win) {
  
 function hide(divToHide) {
     if (divToHide) {
-        divToHide.style.visibility = "hidden";
+        divToHide.classList.add("minimized");
+        setTimeout(() => {
+            divToHide.style.visibility = "hidden";
+        }, 1000);
     }
 }
  
 function show(divToShow) {
     if (divToShow.style.visibility === "hidden") {
         divToShow.style.visibility = "visible";
+        divToShow.classList.remove("minimized");
     }
 }
  

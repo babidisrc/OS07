@@ -67,3 +67,18 @@ footer {
   background-color: #4580c4;
   bottom: 0;
 }
+
+.window.minimized {
+  animation-duration: 1s;
+  animation-name: min;
+}
+
+@keyframes min {
+  from {
+    transform: scale(1, 1);
+  }
+  to {
+    transform: scale(0, 1);
+  }
+}
+
