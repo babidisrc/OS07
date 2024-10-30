@@ -9,7 +9,7 @@ An OS-based portfolio inspired by the Windows 7 design, developed in vanilla Jav
 ## 🗺️ Roadmap
 - [ ] Add window animation
 - [ ] Implement resize feature
-- [ ] Make Taskbar itens functionality
+- [ ] Make taskbar itens functional 
 - [ ] Create more original design + icons
 
 ## 📦 Installation
