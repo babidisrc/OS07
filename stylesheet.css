@@ -5,38 +5,35 @@
   --babidi-cursor-text: url("imgs/windows7_select.cur") 7 0, auto;
 }
 
-html {
-  overflow: hidden;
-}
-
-body {
-  background-color: black;
-}
-
 html, body {
   cursor: var(--babidi-cursor-normal);
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
 }
  
 #OS {
-  position: absolute;
-  width: 70%;
-  height: 95%;
-  left: 0; 
-  right: 0; 
-  margin-inline: auto; 
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
   background-image: url("imgs/windows-7-background.jpg");
-  background-position:center;
+  background-position: center;
+  background-size: cover;
   background-color: black;
 }
 
 button {
   cursor: var(--babidi-cursor-click);
+  width: fit-content;
+  position: absolute;
 }
  
 .window {
     position: absolute !important;
     text-align: center;
     overflow: auto;
+    transition: visibility 0.3s ease;
   }
 
 .title-bar {
@@ -54,7 +51,9 @@ button {
 
 footer {
   z-index: 100;
-  position: absolute;
+  position: fixed;
+  align-items: center;
+  justify-content: start;
   width: 100%;
   height: 50px;
   box-sizing: border-box;
@@ -69,16 +68,24 @@ footer {
 }
 
 .window.minimized {
-  animation-duration: 1s;
-  animation-name: min;
+  animation-duration: 0.2s;
+  animation-name: minimize;
+  opacity: 0;
+  height: 0;
 }
 
-@keyframes min {
+@keyframes minimize {
   from {
-    transform: scale(1, 1);
+    transform: scale(1);
+    height: auto;
+    opacity: 1;
   }
   to {
-    transform: scale(0, 1);
+    transform: scale(0);
+    height: 0;
+    opacity: 0;
   }
 }
+
+
 
