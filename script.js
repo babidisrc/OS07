@@ -14,8 +14,25 @@ windows.forEach((win) => {
 
     document.getElementById("showButton").addEventListener("click", () => showAllWindows());
     
-    win.addEventListener("click", () => bringToFront(win));
+    win.addEventListener("click", () => active(win));
 });
+
+function winLimits(win, OSRect, winRect, newLeft, newTop) {
+    if (newLeft < OSRect.left) {
+        newLeft = OSRect.left;
+    } else if (newLeft + winRect.width > OSRect.right) {
+        newLeft = OSRect.right - winRect.width;
+    }
+
+    if (newTop < OSRect.top) {
+        newTop = OSRect.top;
+    } else if (newTop + winRect.height > OSRect.bottom) {
+        newTop = OSRect.bottom - winRect.height;
+    }
+
+    win.style.left = `${newLeft}px`;
+    win.style.top = `${newTop}px`;
+}
 
 window.addEventListener('resize', () => {
     windows.forEach(win => {
@@ -25,25 +42,17 @@ window.addEventListener('resize', () => {
         let newLeft = winRect.left;
         let newTop = winRect.top;
 
-        if (newLeft < OSRect.left) {
-            newLeft = OSRect.left;
-        } else if (newLeft + winRect.width > OSRect.right) {
-            newLeft = OSRect.right - winRect.width;
-        }
+        winLimits(win, OSRect, winRect, newLeft, newTop);
 
-        if (newTop < OSRect.top) {
-            newTop = OSRect.top;
-        } else if (newTop + winRect.height > OSRect.bottom) {
-            newTop = OSRect.bottom - winRect.height;
-        }
-
-        win.style.left = `${newLeft}px`;
-        win.style.top = `${newTop}px`;
     });
 });
 
 
-function bringToFront(win) {
+function active(win) {
+    windows.forEach(winunfocus => {
+        winunfocus.classList.remove("active");
+    });
+    win.classList.add("active");
     topZIndex++;
     win.style.zIndex = topZIndex;
 }
@@ -53,15 +62,10 @@ function maximize(win) {
     if (win && !win.classList.contains("maximized")) {
         win.classList.add("maximized");
 
-        const previousWidth = win.offsetWidth;
-        const previousHeight = win.offsetHeight;
-        const previousLeft = win.offsetLeft;
-        const previousTop = win.offsetTop;
-
-        win.dataset.previousWidth = previousWidth;
-        win.dataset.previousHeight = previousHeight;
-        win.dataset.previousLeft = previousLeft;
-        win.dataset.previousTop = previousTop;
+        win.dataset.previousWidth = win.offsetWidth;
+        win.dataset.previousHeight = win.offsetHeight;
+        win.dataset.previousLeft = win.offsetLeft;
+        win.dataset.previousTop = win.offsetTop;
 
         win.style.height = `${OSRect.height}px`;
         win.style.width = `${OSRect.width}px`; 
@@ -101,7 +105,7 @@ function dragElement(win) {
     titleBar.addEventListener('mousedown', (e) => {
         offsetX = e.clientX - win.offsetLeft;
         offsetY = e.clientY - win.offsetTop;
-        bringToFront(win);
+        active(win);
         document.addEventListener('mousemove', onMouseMove);
     });
 
@@ -113,24 +117,10 @@ function dragElement(win) {
         const OSRect = OS.getBoundingClientRect();
         const winRect = win.getBoundingClientRect();
         
-        
         let newLeft = e.clientX - offsetX;
         let newTop = e.clientY - offsetY;
 
-        if (newLeft < OSRect.left) {
-            newLeft = OSRect.left;
-        } else if (newLeft + winRect.width > OSRect.right) {
-            newLeft = OSRect.right - winRect.width;
-        }
-
-        if (newTop < OSRect.top) {
-            newTop = OSRect.top;
-        } else if (newTop + winRect.height > OSRect.bottom) {
-            newTop = OSRect.bottom - winRect.height;
-        }
-
-        win.style.left = `${newLeft}px`;
-        win.style.top = `${newTop}px`;
+        winLimits(win, OSRect, winRect, newLeft, newTop);
     }
 }
 

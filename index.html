@@ -11,20 +11,7 @@
 <body>
     <div id="OS">
         <button id="showButton">Show all Hidden Elements</button>
-        <div class="window active" style="width: 240px">
-            <div class="title-bar">
-              <div class="title-bar-text">Teste</div>
-              <div class="title-bar-controls">
-                <button aria-label="Minimize"></button>
-                <button aria-label="Maximize"></button>
-                <button aria-label="Close"></button>
-              </div>
-            </div>
-            <div class="window-body has-space">
-              <p>HEYOOOOOOO!</p>
-            </div>
-          </div>
-          <div class="window active" style="width: 240px">
+          <div class="window" style="width: 240px">
             <div class="title-bar">
               <div class="title-bar-text">Teste 2</div>
               <div class="title-bar-controls">
@@ -34,12 +21,15 @@
               </div>
             </div>
             <div class="window-body has-space">
-              <p>Hello, world!</p>
+              <iframe class="content" src="" title="Window Content"></iframe>
             </div>
             
           </div>
-          <footer >
-            <div  id="taskbar"> <img src="imgs/Windows.ico" height="50px" padding-left="10px"> </div>
+          <footer>
+            <div  id="taskbar"> 
+              <div id="win-start"><img src="imgs/Windows.ico" height="50px" padding-left="10px"> </div>
+              <div id="apps-area"></div>
+            </div>
           </footer>
           
           </div>

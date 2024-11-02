@@ -42,6 +42,12 @@ button {
     cursor: var(--babidi-cursor-grab);
 }
 
+iframe {
+  overflow: hidden;
+  border:none;
+  width: 100%;
+}
+
 .taskbar {
   display: flex;
   gap: 4px;
