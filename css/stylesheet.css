@@ -17,7 +17,7 @@ html, body {
   flex-direction: column;
   width: 100%;
   height: 100vh;
-  background-image: url("imgs/windows-7-background.jpg");
+  background-image: url("../imgs/windows-7-background.jpg");
   background-position: center;
   background-size: cover;
   background-color: black;
@@ -28,7 +28,21 @@ button {
   width: fit-content;
   position: absolute;
 }
- 
+
+.file-item {
+  text-align: center;
+  color: white;
+  text-shadow: -1px 1px 0 #000,
+                         0.5px 0.5px 0 #000,
+                         0.5px -0.5px 0 #000,
+                         -0.5px -0.5px 0 #000,
+                         black 1px 0 3px;
+  img {
+    height: 50px;
+    width: 50px;
+  }
+}
+
 .window {
     position: absolute !important;
     text-align: center;
@@ -50,8 +64,8 @@ iframe {
 
 .taskbar {
   display: flex;
-  gap: 4px;
-  padding: 7px;
+  gap: 2px;
+  padding: 5px;
   padding-left: 10px;
 }
 
@@ -61,7 +75,7 @@ footer {
   align-items: center;
   justify-content: start;
   width: 100%;
-  height: 50px;
+  height: 47px;
   box-sizing: border-box;
   border-top: 1px solid #666;
   background: linear-gradient(
