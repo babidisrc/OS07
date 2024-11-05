@@ -11,8 +11,6 @@ windows.forEach((win) => {
     closeButton.addEventListener("click", () => hide(win));
     minimizeButton.addEventListener("click", () => hide(win));
     maximizeButton.addEventListener("click", () => maximize(win));
-
-    document.getElementById("showButton").addEventListener("click", () => showAllWindows());
     
     win.addEventListener("click", () => active(win));
 });
@@ -59,6 +57,7 @@ function active(win) {
 
 function maximize(win) {
     const OSRect = OS.getBoundingClientRect();
+    const taskBar = OS.querySelector("#taskbar-area");
     if (win && !win.classList.contains("maximized")) {
         win.classList.add("maximized");
 
@@ -67,10 +66,10 @@ function maximize(win) {
         win.dataset.previousLeft = win.offsetLeft;
         win.dataset.previousTop = win.offsetTop;
 
-        win.style.height = `${OSRect.height}px`;
+        win.style.height = `${OSRect.height - taskBar.offsetHeight}px`;
         win.style.width = `${OSRect.width}px`; 
-        win.style.top = `${OSRect.top}px`;      
-        win.style.left = `${OSRect.left}px`;
+        win.style.top = `${OSRect.top }px`;      
+        win.style.left = `${OSRect.left - 3}px`;
     }
     else if (win && win.classList.contains("maximized")) {
         win.classList.remove("maximized");
