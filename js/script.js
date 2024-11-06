@@ -1,4 +1,5 @@
 const windows = document.querySelectorAll(".window");
+const files = document.querySelectorAll(".file-item");
 let topZIndex = 10;
 
 windows.forEach((win) => {
@@ -14,6 +15,35 @@ windows.forEach((win) => {
     
     win.addEventListener("click", () => active(win));
 });
+
+files.forEach((fi) => fi.addEventListener("click", clickItem));
+
+function clickItem() {
+    const item = this;
+
+    if (!item.classList.contains('selected')) {
+        item.classList.add('selected');
+        item.classList.remove('hoverable');
+        document.addEventListener("click", handleClick);
+    } else {
+        alert("AAAAAAAAAAAAAAAAA");
+        item.classList.remove('selected');
+        item.classList.add('hoverable');
+        document.removeEventListener("click", handleClick);
+    }
+
+    function handleClick(evt) {
+        if (!item.contains(evt.target)) {
+            item.classList.remove('selected');
+            item.classList.add('hoverable');
+            document.removeEventListener("click", handleClick);
+        }
+    }
+}
+
+function openProgram() {
+
+}
 
 function winLimits(win, OSRect, winRect, newLeft, newTop) {
     if (newLeft < OSRect.left) {
