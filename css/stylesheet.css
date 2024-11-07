@@ -14,8 +14,7 @@ html, body {
 }
  
 #OS {
-  display: flex;
-  flex-direction: column;
+  display: relative;
   width: 100%;
   height: 100vh;
   background-image: url("../imgs/windows-7-background.jpg");
@@ -96,6 +95,13 @@ button {
     transition: visibility 0.3s ease;
 }
 
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  overflow: auto;
+}
+
 .window.closed {
   display: none;
 }
@@ -104,12 +110,6 @@ button {
     cursor: move;
     z-index: 10;
     cursor: var(--babidi-cursor-grab);
-}
-
-iframe {
-  overflow: hidden;
-  border:none;
-  width: 100%;
 }
 
 #taskbar {

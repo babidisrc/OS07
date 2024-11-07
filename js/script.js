@@ -43,10 +43,19 @@ function clickItem() {
 
 function openWin(id) {
     const winToOpen = document.getElementById("window_" + id);
+    const iframe = document.getElementById("iframe_" + id);
+
+    if (!winToOpen.classList.contains("minimized")) {
+        iframe.src = iframe.src.split('?')[0] + '?' + new Date().getTime();
+    }
+
     winToOpen.classList.remove("closed");
+    winToOpen.style.top = '100px'; 
+    winToOpen.style.left = '100px';
     winToOpen.classList.remove("minimized");
     winToOpen.classList.add("active");
-    winToOpen.style.visibility = "visible";
+    winToOpen.style.zIndex = ++topZIndex;
+    
 }
 
 function winLimits(win, OSRect, winRect, newLeft, newTop) {
@@ -119,7 +128,6 @@ function minimized(divToHide) {
         divToHide.classList.remove("active");
         divToHide.classList.add("minimized");
         setTimeout(() => {
-            divToHide.style.visibility = "hidden";
         }, 10); 
     }
 }
@@ -127,6 +135,8 @@ function minimized(divToHide) {
 function close(divToHide) {
     if (divToHide) {
         divToHide.classList.add("closed");
+        divToHide.style.top = '100px';
+        divToHide.style.left = '100px';
     }
 }
 

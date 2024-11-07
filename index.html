@@ -26,9 +26,10 @@
             </div>
           </div>
         </div>
-          <div class="window closed glass" id="window_about-me" style="width: 240px; z-index: 10;">
+
+          <div class="window closed glass" id="window_about-me" style="width: 360px; z-index: 10;">
             <div class="title-bar">
-              <div class="title-bar-text"></div>
+              <div class="title-bar-text">About Me</div>
               <div class="title-bar-controls">
                 <button aria-label="Minimize"></button>
                 <button aria-label="Maximize"></button>
@@ -36,10 +37,24 @@
               </div>
             </div>
             <div class="window-body has-space">
-              <iframe class="content" src="" title="Window Content"></iframe>
+              <iframe id="iframe_about-me" src="./static/about-me.html" class="content" style="display: block;"></iframe>
             </div>
-            
           </div>
+
+          <div class="window closed glass" id="window_archive" style="width: 360px; z-index: 9;">
+            <div class="title-bar">
+              <div class="title-bar-text">Archive</div>
+              <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close"></button>
+              </div>
+            </div>
+            <div class="window-body has-space">
+              <iframe id="iframe_archive" src="./static/archive.html" class="content" style="display: block;"></iframe>
+            </div>
+          </div>
+
           <footer id="taskbar-area">
             <div id="taskbar"> 
               <div id="win-start"><img src="imgs/Windows.png" height="50px" padding-left="10px"> </div>
