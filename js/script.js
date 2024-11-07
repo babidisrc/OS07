@@ -9,8 +9,8 @@ windows.forEach((win) => {
     const minimizeButton = win.querySelector('[aria-label="Minimize"]');
     const maximizeButton = win.querySelector('[aria-label="Maximize"]');
 
-    closeButton.addEventListener("click", () => hide(win));
-    minimizeButton.addEventListener("click", () => hide(win));
+    closeButton.addEventListener("click", () => close(win));
+    minimizeButton.addEventListener("click", () => minimized(win));
     maximizeButton.addEventListener("click", () => maximize(win));
     
     win.addEventListener("click", () => active(win));
@@ -26,7 +26,7 @@ function clickItem() {
         item.classList.remove('hoverable');
         document.addEventListener("click", handleClick);
     } else {
-        alert("AAAAAAAAAAAAAAAAA");
+        openWin(item.id);
         item.classList.remove('selected');
         item.classList.add('hoverable');
         document.removeEventListener("click", handleClick);
@@ -41,8 +41,12 @@ function clickItem() {
     }
 }
 
-function openProgram() {
-
+function openWin(id) {
+    const winToOpen = document.getElementById("window_" + id);
+    winToOpen.classList.remove("closed");
+    winToOpen.classList.remove("minimized");
+    winToOpen.classList.add("active");
+    winToOpen.style.visibility = "visible";
 }
 
 function winLimits(win, OSRect, winRect, newLeft, newTop) {
@@ -110,8 +114,9 @@ function maximize(win) {
     }
 }
 
-function hide(divToHide) {
+function minimized(divToHide) {
     if (divToHide) {
+        divToHide.classList.remove("active");
         divToHide.classList.add("minimized");
         setTimeout(() => {
             divToHide.style.visibility = "hidden";
@@ -119,13 +124,11 @@ function hide(divToHide) {
     }
 }
 
-function showAllWindows() {
-    windows.forEach(win => {
-        win.classList.remove("minimized");
-        win.style.visibility = "visible"; 
-    });
+function close(divToHide) {
+    if (divToHide) {
+        divToHide.classList.add("closed");
+    }
 }
-
 
 function dragElement(win) {
     const titleBar = win.querySelector('.title-bar');
@@ -134,7 +137,9 @@ function dragElement(win) {
     titleBar.addEventListener('mousedown', (e) => {
         offsetX = e.clientX - win.offsetLeft;
         offsetY = e.clientY - win.offsetTop;
-        active(win);
+        if (!win.classList.contains("active")) {
+            active(win);
+        }
         document.addEventListener('mousemove', onMouseMove);
     });
 

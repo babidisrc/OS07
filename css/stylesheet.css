@@ -1,8 +1,8 @@
 :root {
-  --babidi-cursor-normal: url("../imgs/windows7_arrow.cur"), auto;
-  --babidi-cursor-click: url("../imgs/windows7_link.cur") 7 0, auto;
-  --babidi-cursor-grab: url("../imgs/windows7_move.cur") 5 0, auto;
-  --babidi-cursor-text: url("../imgs/windows7_select.cur") 7 0, auto;
+  --babidi-cursor-normal: url("../imgs/windows7_arrow.png"), auto;
+  --babidi-cursor-click: url("../imgs/windows7_link.png") 7 0, auto;
+  --babidi-cursor-grab: url("../imgs/windows7_move.png") 5 0, auto;
+  --babidi-cursor-text: url("../imgs/windows7_select.png") 7 0, auto;
 }
 
 html, body {
@@ -94,7 +94,11 @@ button {
     position: absolute;
     overflow: auto;
     transition: visibility 0.3s ease;
-  }
+}
+
+.window.closed {
+  display: none;
+}
 
 .title-bar {
     cursor: move;
@@ -148,11 +152,13 @@ iframe {
     transform: scale(1);
     height: auto;
     opacity: 1;
+    visibility: visible;
   }
   to {
     transform: scale(0);
     height: 0;
     opacity: 0;
+    visibility: hidden;
   }
 }
 
