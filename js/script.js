@@ -1,5 +1,6 @@
 const windows = document.querySelectorAll(".window");
 const files = document.querySelectorAll(".file-item");
+const iframes = document.querySelectorAll("iframe");
 let topZIndex = 10;
 
 windows.forEach((win) => {
@@ -14,6 +15,22 @@ windows.forEach((win) => {
     maximizeButton.addEventListener("click", () => maximize(win));
     
     win.addEventListener("click", () => active(win));
+
+    iframes.forEach((iframe) => { 
+        const windowBody = iframe.closest(".window-body");
+        iframe.onload = function() {
+            iframe.style.height = windowBody.clientHeight + 'px';
+            iframe.style.width = windowBody.clientWidth + 'px';
+        }
+        
+        iframe.addEventListener("mousedown", () => {
+            const parentWindow = iframe.closest(".window");
+            if (parentWindow) {
+                active(parentWindow);
+            }
+        });
+    });
+        
 });
 
 files.forEach((fi) => fi.addEventListener("click", clickItem));
@@ -85,6 +102,18 @@ window.addEventListener('resize', () => {
 
         winLimits(win, OSRect, winRect, newLeft, newTop);
 
+        
+        const iframe = win.querySelector("iframe");
+
+        if (iframe) {
+            iframe.onload = function() { 
+            const iframeContentHeight = iframe.contentWindow.document.body.scrollHeight;
+            const iframeContentWidth = iframe.contentWindow.document.body.scrollWidth;
+
+            win.style.height = iframeContentHeight + 'px';
+            win.style.width = iframeContentWidth + 'px';
+        };
+    }
     });
 });
 
@@ -113,6 +142,7 @@ function maximize(win) {
         win.style.width = `${OSRect.width}px`; 
         win.style.top = `${OSRect.top }px`;      
         win.style.left = `${OSRect.left - 3}px`;
+
     }
     else if (win && win.classList.contains("maximized")) {
         win.classList.remove("maximized");
@@ -135,6 +165,13 @@ function minimized(divToHide) {
 function close(divToHide) {
     if (divToHide) {
         divToHide.classList.add("closed");
+        if (divToHide.classList.contains("maximized")) {
+            divToHide.classList.remove("maximized");
+            divToHide.style.height = `${divToHide.dataset.previousHeight}px`;
+            divToHide.style.width = `${divToHide.dataset.previousWidth}px`; 
+            divToHide.style.top = `${divToHide.dataset.previousTop}px`;      
+            divToHide.style.left = `${divToHide.dataset.previousLeft}px`;
+        }
         divToHide.style.top = '100px';
         divToHide.style.left = '100px';
     }
