@@ -1,0 +1,6 @@
+:root {
+    --babidi-cursor-normal: url("../imgs/windows7_arrow.png"), auto;
+    --babidi-cursor-click: url("../imgs/windows7_link.png") 7 0, auto;
+    --babidi-cursor-grab: url("../imgs/windows7_move.png") 5 0, auto;
+    --babidi-cursor-text: url("../imgs/windows7_select.png") 7 0, auto;
+  }

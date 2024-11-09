@@ -63,6 +63,8 @@ function openWin(id) {
     const iframe = document.getElementById("iframe_" + id);
 
     if (!winToOpen.classList.contains("minimized")) {
+        winToOpen.style.top = `${winToOpen.dataset.previousTop}px`;      
+        winToOpen.style.left = `${winToOpen.dataset.previousLeft}px`;
         iframe.src = iframe.src.split('?')[0] + '?' + new Date().getTime();
     }
 
@@ -127,9 +129,24 @@ function active(win) {
     win.style.zIndex = topZIndex;
 }
 
+function previousSettingsWin (win, windowBody, iframe) {
+    win.style.height = `${win.dataset.previousHeight}px`;
+    win.style.width = `${win.dataset.previousWidth}px`; 
+    win.style.top = `${win.dataset.previousTop}px`;      
+    win.style.left = `${win.dataset.previousLeft}px`;
+
+    windowBody.style.height = `${win.dataset.previousHeight}px`;
+    windowBody.style.width = `${win.dataset.previousWidth - 28}px`; 
+
+    iframe.style.height = `${win.dataset.previousHeight - 55}px`;
+    iframe.style.width =  `${win.dataset.previousWidth - 28}px`;
+}
+
 function maximize(win) {
     const OSRect = OS.getBoundingClientRect();
     const taskBar = OS.querySelector("#taskbar-area");
+    const windowBody = win.querySelector(".window-body");
+    const iframe = win.querySelector("iframe");
     if (win && !win.classList.contains("maximized")) {
         win.classList.add("maximized");
 
@@ -143,19 +160,23 @@ function maximize(win) {
         win.style.top = `${OSRect.top }px`;      
         win.style.left = `${OSRect.left - 3}px`;
 
+        windowBody.style.height = `${OSRect.height - taskBar.offsetHeight - 50}px`;
+        windowBody.style.width = `${OSRect.width - 28}px`;
+
+        iframe.style.height = `${OSRect.height - taskBar.offsetHeight}px`;
+        iframe.style.width = `${OSRect.width - 28}px`;
+
     }
     else if (win && win.classList.contains("maximized")) {
         win.classList.remove("maximized");
-        win.style.height = `${win.dataset.previousHeight}px`;
-        win.style.width = `${win.dataset.previousWidth}px`; 
-        win.style.top = `${win.dataset.previousTop}px`;      
-        win.style.left = `${win.dataset.previousLeft}px`;
+        previousSettingsWin(win, windowBody, iframe);
     }
 }
 
 function minimized(divToHide) {
     if (divToHide) {
         divToHide.classList.remove("active");
+        divToHide.classList.remove("maximized");
         divToHide.classList.add("minimized");
         setTimeout(() => {
         }, 10); 
@@ -166,11 +187,10 @@ function close(divToHide) {
     if (divToHide) {
         divToHide.classList.add("closed");
         if (divToHide.classList.contains("maximized")) {
+            const windowBody = win.querySelector(".window-body");
+            const iframe = win.querySelector("iframe");
             divToHide.classList.remove("maximized");
-            divToHide.style.height = `${divToHide.dataset.previousHeight}px`;
-            divToHide.style.width = `${divToHide.dataset.previousWidth}px`; 
-            divToHide.style.top = `${divToHide.dataset.previousTop}px`;      
-            divToHide.style.left = `${divToHide.dataset.previousLeft}px`;
+            previousSettingsWin(divToHide, windowBody, iframe);
         }
         divToHide.style.top = '100px';
         divToHide.style.left = '100px';
@@ -195,9 +215,16 @@ function dragElement(win) {
     });
 
     function onMouseMove(e) {
+        if(win.classList.contains("maximized")) {
+            win.classList.remove("maximized");
+            win.style.height = `${win.dataset.previousHeight}px`;
+            win.style.width = `${win.dataset.previousWidth}px`; 
+            win.style.top = `${win.dataset.previousTop}px`;      
+            win.style.left = `${win.dataset.previousLeft}px`;
+        }
         const OSRect = OS.getBoundingClientRect();
         const winRect = win.getBoundingClientRect();
-        
+
         let newLeft = e.clientX - offsetX;
         let newTop = e.clientY - offsetY;
 
