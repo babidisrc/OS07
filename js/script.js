@@ -187,8 +187,13 @@ function close(divToHide) {
         divToHide.classList.remove("maximized");
         const windowBody = divToHide.querySelector(".window-body");
         const iframe = divToHide.querySelector("iframe");
-        previousSettingsWin(divToHide, windowBody, iframe);
-        
+
+        if (divToHide.classList.contains("maximized")) {
+            
+            previousSettingsWin(divToHide, windowBody, iframe);
+            console.log("closed maximized")
+        }
+
         divToHide.classList.add("closed");
         divToHide.style.top = '100px';
         divToHide.style.left = '100px';
@@ -228,11 +233,6 @@ function dragElement(win) {
         let newTop = e.clientY - offsetY;
 
         winLimits(win, OSRect, winRect, newLeft, newTop);
-
-        if (iframe) {
-            iframe.style.height = (win.clientHeight - 55) + 'px';
-            iframe.style.width = (win.clientWidth - 28) + 'px';
-        }
     }
 }
 
