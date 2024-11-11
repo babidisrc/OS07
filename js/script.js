@@ -3,6 +3,27 @@ const files = document.querySelectorAll(".file-item");
 const iframes = document.querySelectorAll("iframe");
 let topZIndex = 10;
 
+const apps = {
+    "about-me": {
+        defaultSize: {
+            width: 696,
+            height: 400
+        },
+    },
+    "archive": {
+        defaultSize: {
+            width: 636,
+            height: 600
+        },
+    },
+    "media-player": {
+        defaultSize: {
+            width: 500,
+            height: 320
+        }
+    }
+}
+
 windows.forEach((win) => {
     dragElement(win);
 
@@ -56,18 +77,26 @@ function openWin(id) {
     const winToOpen = document.getElementById("window_" + id);
     const iframe = document.getElementById("iframe_" + id);
 
+    const app = apps[id];
+    let width = 600; 
+    let height = 400;
+
+    if (app) {
+        ({width, height} = app.defaultSize);
+    }
+
     if (iframe) {
         iframe.src = iframe.src.split('?')[0] + '?' + new Date().getTime();
     }
 
-    if (!winToOpen.classList.contains("minimized")) {
+    if (winToOpen.classList.contains("minimized")) {
         winToOpen.style.top = `${winToOpen.dataset.previousTop}px`;      
         winToOpen.style.left = `${winToOpen.dataset.previousLeft}px`;
         return;
     }
 
-    winToOpen.style.height = iframe.contentWindow.document.documentElement.scrollHeight + 'px';
-    winToOpen.style.width = iframe.contentWindow.document.documentElement.scrollWidth + 'px';
+    iframe.style.width = `${width}px`;
+    iframe.style.height = `${height}px`;
 
     winToOpen.style.top = '100px'; 
     winToOpen.style.left = '100px';
@@ -164,10 +193,10 @@ function maximize(win) {
         win.style.top = `${OSRect.top }px`;      
         win.style.left = `${OSRect.left - 3}px`;
 
-        windowBody.style.height = `${OSRect.height - taskBar.offsetHeight - 50}px`;
+        windowBody.style.height = `${OSRect.height - taskBar.offsetHeight - 80}px`;
         windowBody.style.width = `${OSRect.width - 28}px`;
 
-        iframe.style.height = `${OSRect.height - taskBar.offsetHeight - 50}px`;
+        iframe.style.height = `${OSRect.height - taskBar.offsetHeight - 80}px`;
         iframe.style.width = `${OSRect.width - 28}px`;
 
     }
@@ -193,9 +222,8 @@ function close(divToHide) {
         const iframe = divToHide.querySelector("iframe");
 
         if (divToHide.classList.contains("maximized")) {
-            
             previousSettingsWin(divToHide, windowBody, iframe);
-            console.log("closed maximized")
+            divToHide.classList.add("closed");
         }
 
         divToHide.classList.add("closed");
