@@ -1,5 +1,3 @@
-import { apps } from './test.js';
-
 const windows = document.querySelectorAll(".window");
 const files = document.querySelectorAll(".file-item");
 const iframes = document.querySelectorAll("iframe");
@@ -11,8 +9,6 @@ windows.forEach((win) => {
     const closeButton = win.querySelector('[aria-label="Close"]');
     const minimizeButton = win.querySelector('[aria-label="Minimize"]');
     const maximizeButton = win.querySelector('[aria-label="Maximize"]');
-
-    const iframe = win.closest("iframe");
 
     closeButton.addEventListener("click", () => close(win));
     minimizeButton.addEventListener("click", () => minimized(win));
@@ -60,11 +56,6 @@ function openWin(id) {
     const winToOpen = document.getElementById("window_" + id);
     const iframe = document.getElementById("iframe_" + id);
 
-    const app = apps[id];
-    if (app) {
-        const { width, height } = app.defaultSize;
-    }
-
     if (iframe) {
         iframe.src = iframe.src.split('?')[0] + '?' + new Date().getTime();
     }
@@ -75,9 +66,9 @@ function openWin(id) {
         return;
     }
 
-    winToOpen.style.width = `${width}px`;
-    winToOpen.style.height = `${height}px`;
-    
+    winToOpen.style.height = iframe.contentWindow.document.documentElement.scrollHeight + 'px';
+    winToOpen.style.width = iframe.contentWindow.document.documentElement.scrollWidth + 'px';
+
     winToOpen.style.top = '100px'; 
     winToOpen.style.left = '100px';
 
