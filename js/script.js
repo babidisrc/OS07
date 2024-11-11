@@ -163,7 +163,7 @@ function maximize(win) {
         windowBody.style.height = `${OSRect.height - taskBar.offsetHeight - 50}px`;
         windowBody.style.width = `${OSRect.width - 28}px`;
 
-        iframe.style.height = `${OSRect.height - taskBar.offsetHeight}px`;
+        iframe.style.height = `${OSRect.height - taskBar.offsetHeight - 50}px`;
         iframe.style.width = `${OSRect.width - 28}px`;
 
     }
@@ -184,26 +184,32 @@ function minimized(divToHide) {
 }
 
 function close(divToHide) {
-    if (divToHide) {
+        divToHide.classList.remove("maximized");
+        const windowBody = divToHide.querySelector(".window-body");
+        const iframe = divToHide.querySelector("iframe");
+        previousSettingsWin(divToHide, windowBody, iframe);
+        
         divToHide.classList.add("closed");
-        if (divToHide.classList.contains("maximized")) {
-            const windowBody = win.querySelector(".window-body");
-            const iframe = win.querySelector("iframe");
-            divToHide.classList.remove("maximized");
-            previousSettingsWin(divToHide, windowBody, iframe);
-        }
         divToHide.style.top = '100px';
         divToHide.style.left = '100px';
-    }
 }
 
 function dragElement(win) {
     const titleBar = win.querySelector('.title-bar');
+    const windowBody = win.querySelector(".window-body");
+    const iframe = win.querySelector("iframe");
     let offsetX, offsetY;
 
     titleBar.addEventListener('mousedown', (e) => {
         offsetX = e.clientX - win.offsetLeft;
         offsetY = e.clientY - win.offsetTop;
+
+        if (win.classList.contains("maximized")) {
+            previousSettingsWin(win, windowBody, iframe);
+            win.classList.remove("maximized");
+            
+        }
+
         if (!win.classList.contains("active")) {
             active(win);
         }
@@ -215,13 +221,6 @@ function dragElement(win) {
     });
 
     function onMouseMove(e) {
-        if(win.classList.contains("maximized")) {
-            win.classList.remove("maximized");
-            win.style.height = `${win.dataset.previousHeight}px`;
-            win.style.width = `${win.dataset.previousWidth}px`; 
-            win.style.top = `${win.dataset.previousTop}px`;      
-            win.style.left = `${win.dataset.previousLeft}px`;
-        }
         const OSRect = OS.getBoundingClientRect();
         const winRect = win.getBoundingClientRect();
 
@@ -229,6 +228,11 @@ function dragElement(win) {
         let newTop = e.clientY - offsetY;
 
         winLimits(win, OSRect, winRect, newLeft, newTop);
+
+        if (iframe) {
+            iframe.style.height = (win.clientHeight - 55) + 'px';
+            iframe.style.width = (win.clientWidth - 28) + 'px';
+        }
     }
 }
 
