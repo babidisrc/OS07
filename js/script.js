@@ -1,3 +1,5 @@
+import { apps } from './test.js';
+
 const windows = document.querySelectorAll(".window");
 const files = document.querySelectorAll(".file-item");
 const iframes = document.querySelectorAll("iframe");
@@ -10,27 +12,23 @@ windows.forEach((win) => {
     const minimizeButton = win.querySelector('[aria-label="Minimize"]');
     const maximizeButton = win.querySelector('[aria-label="Maximize"]');
 
+    const iframe = win.closest("iframe");
+
     closeButton.addEventListener("click", () => close(win));
     minimizeButton.addEventListener("click", () => minimized(win));
     maximizeButton.addEventListener("click", () => maximize(win));
     
     win.addEventListener("click", () => active(win));
 
-    iframes.forEach((iframe) => { 
-        const windowBody = iframe.closest(".window-body");
-        iframe.onload = function() {
-            iframe.style.height = windowBody.clientHeight + 'px';
-            iframe.style.width = windowBody.clientWidth + 'px';
-        }
-        
+    iframes.forEach((iframe) => {
         iframe.addEventListener("mousedown", () => {
             const parentWindow = iframe.closest(".window");
             if (parentWindow) {
                 active(parentWindow);
             }
-        });
+            })
     });
-        
+    
 });
 
 files.forEach((fi) => fi.addEventListener("click", clickItem));
@@ -62,15 +60,28 @@ function openWin(id) {
     const winToOpen = document.getElementById("window_" + id);
     const iframe = document.getElementById("iframe_" + id);
 
-    if (!winToOpen.classList.contains("minimized")) {
-        winToOpen.style.top = `${winToOpen.dataset.previousTop}px`;      
-        winToOpen.style.left = `${winToOpen.dataset.previousLeft}px`;
+    const app = apps[id];
+    if (app) {
+        const { width, height } = app.defaultSize;
+    }
+
+    if (iframe) {
         iframe.src = iframe.src.split('?')[0] + '?' + new Date().getTime();
     }
 
-    winToOpen.classList.remove("closed");
+    if (!winToOpen.classList.contains("minimized")) {
+        winToOpen.style.top = `${winToOpen.dataset.previousTop}px`;      
+        winToOpen.style.left = `${winToOpen.dataset.previousLeft}px`;
+        return;
+    }
+
+    winToOpen.style.width = `${width}px`;
+    winToOpen.style.height = `${height}px`;
+    
     winToOpen.style.top = '100px'; 
     winToOpen.style.left = '100px';
+
+    winToOpen.classList.remove("closed");
     winToOpen.classList.remove("minimized");
     winToOpen.classList.add("active");
     winToOpen.style.zIndex = ++topZIndex;
@@ -118,6 +129,8 @@ window.addEventListener('resize', () => {
     }
     });
 });
+
+
 
 
 function active(win) {
@@ -235,5 +248,3 @@ function dragElement(win) {
         winLimits(win, OSRect, winRect, newLeft, newTop);
     }
 }
-
-
