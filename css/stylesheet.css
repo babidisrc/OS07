@@ -149,6 +149,23 @@ iframe {
   bottom: 0;
 }
 
+#start-menu {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 52px;
+  height: 500px;
+  width: 400px;
+}
+
+#start-menu > .window-body{
+  flex-grow: 1;  
+  display: flex;
+  flex-direction: column;
+  overflow: auto; 
+}
+
 .window.minimized {
   animation-duration: 0.2s;
   animation-name: minimize;

@@ -1,4 +1,4 @@
-const windows = document.querySelectorAll(".window");
+const windows = document.querySelectorAll(".window:not(.menu)");
 const files = document.querySelectorAll(".file-item");
 const iframes = document.querySelectorAll("iframe");
 let topZIndex = 10;
@@ -25,27 +25,25 @@ const apps = {
 }
 
 windows.forEach((win) => {
-    dragElement(win);
-
-    const closeButton = win.querySelector('[aria-label="Close"]');
-    const minimizeButton = win.querySelector('[aria-label="Minimize"]');
-    const maximizeButton = win.querySelector('[aria-label="Maximize"]');
-
-    closeButton.addEventListener("click", () => close(win));
-    minimizeButton.addEventListener("click", () => minimized(win));
-    maximizeButton.addEventListener("click", () => maximize(win));
+        dragElement(win);
+        const closeButton = win.querySelector('[aria-label="Close"]');
+        const minimizeButton = win.querySelector('[aria-label="Minimize"]');
+        const maximizeButton = win.querySelector('[aria-label="Maximize"]');
     
-    win.addEventListener("click", () => active(win));
-
-    iframes.forEach((iframe) => {
-        iframe.addEventListener("mousedown", () => {
-            const parentWindow = iframe.closest(".window");
-            if (parentWindow) {
-                active(parentWindow);
-            }
+        closeButton.addEventListener("click", () => close(win));
+        minimizeButton.addEventListener("click", () => minimized(win));
+        maximizeButton.addEventListener("click", () => maximize(win));
+        
+        win.addEventListener("click", () => active(win));
+    
+        iframes.forEach((iframe) => {
+            iframe.addEventListener("mousedown", () => {
+                const parentWindow = iframe.closest(".window");
+                if (parentWindow) {
+                    active(parentWindow);
+                }
             })
-    });
-    
+        });
 });
 
 files.forEach((fi) => fi.addEventListener("click", clickItem));
