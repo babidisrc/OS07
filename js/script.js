@@ -92,6 +92,7 @@ function openWin(id) {
     if (winToOpen.classList.contains("minimized")) {
         winToOpen.style.top = `${winToOpen.dataset.previousTop}px`;      
         winToOpen.style.left = `${winToOpen.dataset.previousLeft}px`;
+        winToOpen.classList.remove("minimized");
         return;
     }
 
@@ -217,13 +218,13 @@ function minimized(divToHide) {
 }
 
 function close(divToHide) {
-        divToHide.classList.remove("maximized");
         const windowBody = divToHide.querySelector(".window-body");
         const iframe = divToHide.querySelector("iframe");
 
         if (divToHide.classList.contains("maximized")) {
             previousSettingsWin(divToHide, windowBody, iframe);
             divToHide.classList.add("closed");
+            divToHide.classList.remove("maximized");
         }
 
         divToHide.classList.add("closed");

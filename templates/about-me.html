@@ -6,20 +6,28 @@
     <link rel="stylesheet" href="../css/root.css">
     <title>About me</title>
     <style>
+        * {
+          margin: 2px;
+          padding: 0;
+          box-sizing: border-box;
+        }
         body, html {
-          cursor: url("../imgs/windows7_arrow.png"), auto;
-          font-size: large;
+          cursor: var(--babidi-cursor-normal);
+          font-size: 18px;
           background-color: white;
+          font-family: Arial, sans-serif;
         }
         a, button {
-          cursor: url("../imgs/windows7_link.png") 7 0, auto;
+          cursor: var(--babidi-cursor-click);
         }
         input, textarea {
-          cursor: url("../imgs/windows7_select.png") 7 0, text;
+          cursor: var(--babidi-cursor-text);
         }
         .container {
+            
             display: flex;
             align-items: flex-start; 
+            justify-content: space-between;
             gap: 20px; 
         }
         img {
@@ -32,11 +40,13 @@
   <div class="container">
     <div>
       <h2>> hello, world!</h2>
-      <p>yo! you can call me <b>babidi</b>, <b>thai</b> or anything in between</p>
-      <p>just a high schooler wannabe engineer who is into y2k aesthetic, rpg maker horror games, groove songs, and fantasy comics </p>
-      <p>learning low-level programming, C, Python, AI/Robotics, and anything else I find interesting really</p>
       <br>
+      <p>yo! you can call me <b>babidi,</b> <b>thai</b> or anything in between</p>
       <br>
+      <p>just a brazilian high schooler wannabe engineer who is into y2k aesthetics, rpg maker horror games, groove songs, and fantasy comics </p>
+      <br>
+      <p>learning low-level programming, C, Python, AI/robotics, and anything else I find interesting really</p>
+      <br><br>
       <p>source code for this website is on github, check it out later! </p>
     </div>
     <img src="../imgs/me.jpg">
