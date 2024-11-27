@@ -150,6 +150,7 @@ iframe {
 }
 
 #start-menu {
+  cursor: var(--babidi-cursor-normal);
   display: flex;
   flex-direction: row;
   position: fixed;
@@ -169,7 +170,7 @@ iframe {
   overflow: auto; 
 }
 
-.buttonMenu {
+#changeWallpaper {
   all: unset;
   position: absolute;
   color: white;
@@ -178,6 +179,9 @@ iframe {
                          0.5px -0.5px 0 #000,
                          -0.5px -0.5px 0 #000,
                          black 1px 0 3px;
+  width: 25%; 
+  height: 4%;               
+  border: #000 1px solid;
 }
 
 .window.minimized {

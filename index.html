@@ -38,7 +38,7 @@
               </div>
             </div>
             <div class="window-body has-space">
-                <iframe id="iframe_about-me" src="./templates/about-me.html" frameborder="0" scrolling="no" class="content" style="display: block;"></iframe>
+                <iframe id="iframe_about-me" src="./templates/about-me.html" frameborder="0" scrolling="no" class="content" style="display: block; max-height: 100%; max-width: 100%;"></iframe>
             </div>
           </div>
 
@@ -52,13 +52,12 @@
               </div>
             </div>
             <div class="window-body has-space">
-                <iframe id="iframe_archive" src="./templates/archive.html" class="content" style="display: block;"></iframe>
+                <iframe id="iframe_archive" src="./templates/archive.html" class="content" style="display: block; max-height: 100%; max-width: 100%;"></iframe>
             </div>
           </div>
 
 
-            <div class="title-bar">
-            <div class="window menu glass" id="start-menu">
+            <div class="window menu glass" id="start-menu" style="z-index: 5; display: none;">
                 <div class="window-body has-space">
                   <ul role="menu">
                     <li role="menuitem">Archive</li>
@@ -66,15 +65,14 @@
                   </ul>
                 </div>
                 <div style="height: 140px; width: 220px;">
-                  <button class="buttonMenu">Change Wallpaper</button>
+                  <input id="changeWallpaper" type="file"/>
                 </div>
               </div>
               </div>
-            </div>
             
           <footer id="taskbar-area">
             <div id="taskbar"> 
-              <div id="win-start"><img src="imgs/Windows.png" height="50px" padding-left="10px"> </div>
+              <div id="win-start"><button><img src="imgs/Windows.png" height="50px" padding-left="10px"></button> </div>
               <div id="apps-area"></div>
             </div>
           </footer>

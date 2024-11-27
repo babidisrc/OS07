@@ -1,6 +1,7 @@
 const windows = document.querySelectorAll(".window:not(.menu)");
 const files = document.querySelectorAll(".file-item");
 const iframes = document.querySelectorAll("iframe");
+const winButton = document.getElementById("win-start")
 let topZIndex = 10;
 
 const apps = {
@@ -96,6 +97,8 @@ function openWin(id) {
 
     iframe.style.width = `${width}px`;
     iframe.style.height = `${height}px`;
+    winToOpen.style.width = `${width}px`;
+    winToOpen.style.height = `${height + 50}px`;
 
     winToOpen.style.top = '100px'; 
     winToOpen.style.left = '100px';
@@ -148,9 +151,6 @@ window.addEventListener('resize', () => {
     }
     });
 });
-
-
-
 
 function active(win) {
     windows.forEach(winunfocus => {
@@ -266,3 +266,23 @@ function dragElement(win) {
         winLimits(win, OSRect, winRect, newLeft, newTop);
     }
 }
+
+window.addEventListener('load', function() {
+    document.querySelector('input[type="file"]').addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            OS.onload = () => {
+                URL.revokeObjectURL(OS.style.background); 
+            }
+  
+            var tmp_path = URL.createObjectURL(this.files[0]);
+             OS.style.background = "url('" + tmp_path + "')";
+        }
+    });
+  });
+
+  winButton.addEventListener('click', function() {
+    var winMenu = document.getElementById("start-menu");
+    if (winMenu.style.display = "none") {
+        winMenu.style.display = "flex";
+    }
+  });
